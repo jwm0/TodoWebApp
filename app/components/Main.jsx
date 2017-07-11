@@ -4,10 +4,8 @@ var Main = (props) => {
   return(
     <div>
       <div>
-        <div>
-          <p>Main.jsx rendered</p>
+          <p>React Template</p>
           {props.children}
-        </div>
       </div>
     </div>
   );
