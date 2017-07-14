@@ -36,7 +36,7 @@ module.exports = {
     filteredTodos = filteredTodos.filter((todo)=>{
       if(searchText == '') return true;
       else {
-        return !todo.text.toLowerCase().indexOf(searchText)
+        return !todo.text.toLowerCase().indexOf(searchText);
       }
     });
 
