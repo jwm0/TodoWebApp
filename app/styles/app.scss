@@ -6,6 +6,26 @@
 @include foundation-everything;
 
 // Components
-.main{
-  margin: 2rem 0;
+@import "components/containers";
+@import "components/list";
+@import "components/todo";
+
+
+body{
+  padding-top: 3rem;
+  background-color: #fefefe;
+}
+
+.header{
+  text-align: center;
+  height: 8rem;
+  width: 100%;
+  background-color: $blue;
+  letter-spacing: 3px;
+  text-transform: capitalize;
+  color: #fff;
+
+  h1 {
+    line-height: 8rem;
+  }
 }
