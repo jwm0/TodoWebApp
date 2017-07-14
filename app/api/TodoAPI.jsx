@@ -34,10 +34,8 @@ module.exports = {
 
     // sort by text
     filteredTodos = filteredTodos.filter((todo)=>{
-      if(searchText == '') return true;
-      else {
-        return !todo.text.toLowerCase().indexOf(searchText);
-      }
+      var text = todo.text.toLowerCase();
+      return searchText.length === 0 || text.indexOf(searchText) > -1;
     });
 
     // sort by uncompleted first
