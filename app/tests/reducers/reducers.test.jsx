@@ -25,4 +25,44 @@ describe('Reducers',()=>{
     });
   });
 
+  describe('addTodo', ()=>{
+    it('should add new todo',()=>{
+      var action = {
+        type: 'ADD_TODO',
+        text: 'New todo'
+      }
+      var res = reducers.todosReducer(df([]), df(action));
+      expect(res.length).toBe(1);
+      expect(res[0].text).toEqual(action.text);
+    });
+
+    it('should toggle completed state',()=>{
+      var state = [
+        {
+          id: 1,
+          text: 'todo 1',
+          completed: false,
+          createdAt: 'moment().unix()',
+          completedAt: undefined
+        },
+        {
+          id: 2,
+          text: 'todo 2',
+          completed: true,
+          createdAt: 'moment().unix()',
+          completedAt: undefined
+        }
+      ];
+      var action = {
+        type: 'TOGGLE_TODO',
+        id: '2'
+      }
+
+      var res = reducers.todosReducer(df(state), df(action));
+      expect(res.length).toBe(2);
+      expect(res[1].completed).toBe(false);
+      expect(res[1].completedAt).toEqual(undefined);
+    });
+  });
+
 })
