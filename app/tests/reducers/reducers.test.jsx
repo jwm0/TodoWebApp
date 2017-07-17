@@ -16,16 +16,15 @@ describe('Reducers',()=>{
 
   describe('showCompletedReducer', ()=>{
     it('should toggle state',()=>{
-      var state = {showCompleted: true}
       var action = {
         type: 'TOGGLE_SHOW_COMPLETED'
       }
-      var res = reducers.showCompletedReducer(df(state), df(action));
-      expect(res.showCompleted).toBe(!state.showCompleted);
+      var res = reducers.showCompletedReducer(df(true), df(action));
+      expect(res).toBe(false);
     });
   });
 
-  describe('addTodo', ()=>{
+  describe('todosReducer', ()=>{
     it('should add new todo',()=>{
       var action = {
         type: 'ADD_TODO',
@@ -62,6 +61,32 @@ describe('Reducers',()=>{
       expect(res.length).toBe(2);
       expect(res[1].completed).toBe(false);
       expect(res[1].completedAt).toEqual(undefined);
+    });
+
+    it('should add existing todos', ()=>{
+      var todos = [
+        {
+          id: 1,
+          text: 'bla',
+          completed: false,
+          completedAt: undefined,
+          createdAt: 500
+        },
+        {
+          id: 2,
+          text: 'blabla',
+          completed: false,
+          completedAt: undefined,
+          createdAt: 512
+        }
+      ];
+
+      var action = {
+        type: 'ADD_TODOS',
+        todos
+      }
+      var res = reducers.todosReducer(df(todos),df(action));
+      expect(res.length).toBe(2);
     });
   });
 
