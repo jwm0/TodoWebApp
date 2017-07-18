@@ -10,6 +10,7 @@ export var Todo = React.createClass({
   render: function () {
     var {id, text, completed, createdAt, completedAt, dispatch} = this.props;
     var todoClassName = completed ? 'todo todo-completed' : 'todo';
+
     var renderDate = ()=>{
       var message = 'Created: ';
       var timestamp = createdAt;
@@ -20,15 +21,26 @@ export var Todo = React.createClass({
       return message + moment.unix(timestamp).format('D MMM @ H:mm');
     };
 
+    var renderButton = ()=>{
+      if (completed){
+      return <button type="button" className="alert button" onClick={()=>{
+        dispatch(actions.removeTodo(id));
+      }}>Delete</button>
+    }
+    };
+
     return (
-      <div className={todoClassName} onClick={this.handleClick}>
-        <div>
-          <input type="checkbox" checked={completed} readOnly/>
+      <div className="todo-container">
+        <div className={todoClassName} onClick={this.handleClick}>
+          <div>
+            <input type="checkbox" checked={completed} readOnly/>
+          </div>
+          <div>
+            <p>{text}</p>
+            <p className="todo-subtext">{renderDate()}</p>
+          </div>
         </div>
-        <div>
-          <p>{text}</p>
-          <p className="todo-subtext">{renderDate()}</p>
-        </div>
+        {renderButton()}
       </div>
     )
   }

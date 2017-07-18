@@ -31,3 +31,16 @@ export var toggleTodo = (id) => {
     id
   }
 }
+
+export var removeTodo = (id) => {
+  return {
+    type: 'REMOVE_TODO',
+    id
+  }
+}
+
+export var removeCompleted = () => {
+  return {
+    type: 'REMOVE_COMPLETED'
+  }
+}
