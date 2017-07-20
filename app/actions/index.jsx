@@ -51,7 +51,7 @@ export var addTodos = (todos) => {
 export var getTodos = ()=>{
   //Object.keys();
   return (dispatch, getState) =>{
-    firebaseRef.child('todos').once('value').then((snapshot)=>{
+    return firebaseRef.child('todos').once('value').then((snapshot)=>{
     var parsedTodos = [];
     var todos = snapshot.val() || {};
 
@@ -113,7 +113,7 @@ export var removeCompleted = () => {
 
 export var newRemoveCompleted = () =>{
   return (dispatch, getState) =>{
-    firebaseRef.child('todos').once('value').then((snapshot)=>{
+    return firebaseRef.child('todos').once('value').then((snapshot)=>{
     var todos = snapshot.val() || {};
 
     Object.keys(todos).forEach((id)=>{
