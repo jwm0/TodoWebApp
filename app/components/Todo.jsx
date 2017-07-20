@@ -5,7 +5,7 @@ var moment = require('moment');
 
 export var Todo = React.createClass({
   handleClick: function () {
-    this.props.dispatch(actions.toggleTodo(this.props.id));
+    this.props.dispatch(actions.newToggleTodo(this.props.id, !this.props.completed));
   },
   render: function () {
     var {id, text, completed, createdAt, completedAt, dispatch} = this.props;
@@ -24,7 +24,7 @@ export var Todo = React.createClass({
     var renderButton = ()=>{
       if (completed){
       return <button type="button" className="alert button" onClick={()=>{
-        dispatch(actions.removeTodo(id));
+        dispatch(actions.newRemoveTodo(id));
       }}>Delete</button>
     }
     };

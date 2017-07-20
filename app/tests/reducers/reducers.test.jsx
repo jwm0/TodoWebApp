@@ -28,14 +28,20 @@ describe('Reducers',()=>{
     it('should add new todo',()=>{
       var action = {
         type: 'ADD_TODO',
-        text: 'New todo'
+        todo:   {
+                  id: 1,
+                  text: 'todo 1',
+                  completed: false,
+                  createdAt: 'moment().unix()',
+                  completedAt: undefined
+                }
       }
       var res = reducers.todosReducer(df([]), df(action));
       expect(res.length).toBe(1);
-      expect(res[0].text).toEqual(action.text);
+      expect(res[0].text).toEqual(action.todo.text);
     });
 
-    it('should toggle completed state',()=>{
+    it('should update completed state',()=>{
       var state = [
         {
           id: 1,
@@ -52,9 +58,14 @@ describe('Reducers',()=>{
           completedAt: undefined
         }
       ];
+      var updates = {
+        completed: false,
+        completedAt: null
+      }
       var action = {
-        type: 'TOGGLE_TODO',
-        id: '2'
+        type: 'UPDATE_TODO',
+        id: '2',
+        updates
       }
 
       var res = reducers.todosReducer(df(state), df(action));

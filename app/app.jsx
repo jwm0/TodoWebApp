@@ -9,13 +9,17 @@ var TodoAPI = require('TodoAPI');
 var actions = require('actions');
 var store = require('configureStore').configure();
 
-var initialTodos = TodoAPI.getTodos();
-store.dispatch(actions.addTodos(initialTodos));
+/* ---Fetching data from localStorage--- */
+  /*var initialTodos = TodoAPI.getTodos();
+  store.dispatch(actions.addTodos(initialTodos));
 
-store.subscribe(()=>{
-  var state = store.getState();
-  TodoAPI.setTodos(state.todos);
-});
+  store.subscribe(()=>{
+    var state = store.getState();
+    TodoAPI.setTodos(state.todos);
+  });*/
+
+/* --- Fetching data from external database --- */
+store.dispatch(actions.getTodos());
 
 // load foundation
 $(document).foundation();

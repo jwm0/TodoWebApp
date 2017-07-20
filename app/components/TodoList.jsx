@@ -35,7 +35,7 @@ export var TodoList = React.createClass({
 
       if(showCompleted && completedTodos.length>0){
       return <button className="button alert expanded" onClick={()=>{
-        dispatch(actions.removeCompleted());
+        dispatch(actions.newRemoveCompleted());
       }}>Remove completed tasks</button>;
       }
     };
