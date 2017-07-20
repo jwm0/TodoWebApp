@@ -1,4 +1,4 @@
-import firebase, {firebaseRef} from 'app/firebase';
+import firebase, {firebaseRef, githubProvider} from 'app/firebase';
 import moment from 'moment';
 
 export var setSearchText = (searchText) => {
@@ -124,5 +124,21 @@ export var newRemoveCompleted = () =>{
       }
     });
     });
+  }
+}
+
+export var startLogin = () => {
+  return (dispatch, getState) => {
+    firebase.auth().signInWithRedirect(githubProvider).then((result)=>{
+      console.log('Auth completed', result);
+    }, (e)=>{
+      console.log('Auth failed', e);
+    });
+  }
+}
+
+export var startLogout = () => {
+  return (dispatch, getState) => {
+    firebase.auth().signOut().then(()=>{console.log('logged out')});
   }
 }

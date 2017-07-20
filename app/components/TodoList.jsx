@@ -5,6 +5,7 @@ var TodoAPI = require('TodoAPI');
 var actions = require('actions');
 
 export var TodoList = React.createClass({
+
   render: function () {
     var {todos, showCompleted, searchText, dispatch} = this.props;
 

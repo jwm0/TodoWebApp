@@ -9,10 +9,11 @@
 @import "components/containers";
 @import "components/list";
 @import "components/todo";
+@import "components/page-actions";
+@import "components/login";
 
 
 body{
-  padding-top: 3rem;
   background-color: #fefefe;
 }
 
