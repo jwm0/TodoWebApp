@@ -1,4 +1,4 @@
-import firebase, {firebaseRef, githubProvider} from 'app/firebase';
+import firebase, {firebaseRef, githubProvider, facebookProvider} from 'app/firebase';
 import moment from 'moment';
 
 export var setSearchText = (searchText) => {
@@ -131,13 +131,21 @@ export var newRemoveCompleted = () =>{
   }
 }
 
-export var startLogin = () => {
+export var startLogin = (providerName) => {
   return (dispatch, getState) => {
-      return firebase.auth().signInWithPopup(githubProvider).then((result) => {
-        console.log('Authorized');
-      }, (error) => {
-        console.log('Unable to auth', error);
-      });
+      if(providerName=='facebook'){
+        return firebase.auth().signInWithRedirect(facebookProvider).then((result) => {
+          console.log('Authorized with facebook');
+        }, (error) => {
+          console.log('Unable to auth', error);
+        });
+      } else if (providerName=='github') {
+        return firebase.auth().signInWithRedirect(githubProvider).then((result) => {
+          console.log('Authorized with github');
+        }, (error) => {
+          console.log('Unable to auth', error);
+        });
+      }
     };
 }
 
