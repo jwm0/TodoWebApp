@@ -101,4 +101,15 @@ describe('Reducers',()=>{
     });
   });
 
+  describe('authReducer',()=>{
+    it('should store uid on LOGIN',()=>{
+      var action = {
+        type: 'LOGIN',
+        uid: 'user123'
+      }
+      var res = reducers.authReducer(df({}),df(action));
+      expect(res.uid).toEqual(action.uid);
+    })
+  });
+
 })

@@ -22,14 +22,16 @@ import router from 'app/router/';
 /* --- Redirecting after login/logout --- */
 firebase.auth().onAuthStateChanged((user)=>{
   if(user){
+    store.dispatch(actions.login(user.uid));
+    /* --- Fetching data from external database --- */
+    store.dispatch(actions.getTodos());
     hashHistory.push('/todos');
   } else {
+    store.dispatch(actions.logout());
     hashHistory.push('/');
   }
 });
 
-/* --- Fetching data from external database --- */
-store.dispatch(actions.getTodos());
 
 // load foundation
 $(document).foundation();

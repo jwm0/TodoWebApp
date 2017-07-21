@@ -23,7 +23,8 @@ export var newAddTodo = (text) => {
       createdAt: moment().unix(),
       completedAt: null
     }
-    var todosRef = firebaseRef.child('todos').push(todo);
+    var uid = getState().auth.uid;
+    var todosRef = firebaseRef.child('users/'+uid+'/todos').push(todo);
 
     return todosRef.then(()=>{
       todo = {
@@ -51,7 +52,8 @@ export var addTodos = (todos) => {
 export var getTodos = ()=>{
   //Object.keys();
   return (dispatch, getState) =>{
-    return firebaseRef.child('todos').once('value').then((snapshot)=>{
+    var uid = getState().auth.uid;
+    return firebaseRef.child('users/'+uid+'/todos').once('value').then((snapshot)=>{
     var parsedTodos = [];
     var todos = snapshot.val() || {};
 
@@ -77,7 +79,8 @@ export var updateTodo = (id, updates) => {
 
 export var newToggleTodo = (id, completed) =>{
   return (dispatch, getState) => {
-    var todosRef = firebaseRef.child(`todos/${id}`); // 'todos/' + id == `todos/${id}`
+    var uid = getState().auth.uid;
+    var todosRef = firebaseRef.child(`users/${uid}/todos/${id}`); // 'todos/' + id == `todos/${id}`
     var updates = {
       completed,
       completedAt: completed ? moment().unix() : null
@@ -99,7 +102,8 @@ export var removeTodo = (id) => {
 
 export var newRemoveTodo = (id) => {
   return (dispatch, getState) => {
-    firebaseRef.child(`todos/${id}`).remove().then(()=>{
+    var uid = getState().auth.uid;
+    firebaseRef.child(`users/${uid}/todos/${id}`).remove().then(()=>{
       dispatch(removeTodo(id));
     });
   }
@@ -113,12 +117,12 @@ export var removeCompleted = () => {
 
 export var newRemoveCompleted = () =>{
   return (dispatch, getState) =>{
-    return firebaseRef.child('todos').once('value').then((snapshot)=>{
+    var uid = getState().auth.uid;
+    return firebaseRef.child(`users/${uid}/todos`).once('value').then((snapshot)=>{
     var todos = snapshot.val() || {};
-
     Object.keys(todos).forEach((id)=>{
       if(todos[id].completed==true){
-        firebaseRef.child(`todos/${id}`).remove().then(()=>{
+        firebaseRef.child(`users/${uid}/todos/${id}`).remove().then(()=>{
           dispatch(removeTodo(id));
         });
       }
@@ -129,16 +133,29 @@ export var newRemoveCompleted = () =>{
 
 export var startLogin = () => {
   return (dispatch, getState) => {
-    firebase.auth().signInWithRedirect(githubProvider).then((result)=>{
-      console.log('Auth completed', result);
-    }, (e)=>{
-      console.log('Auth failed', e);
-    });
-  }
+      return firebase.auth().signInWithPopup(githubProvider).then((result) => {
+        console.log('Authorized');
+      }, (error) => {
+        console.log('Unable to auth', error);
+      });
+    };
 }
 
 export var startLogout = () => {
   return (dispatch, getState) => {
-    firebase.auth().signOut().then(()=>{console.log('logged out')});
+    firebase.auth().signOut();
+  }
+}
+
+export var login = (uid)=>{
+  return {
+    type: 'LOGIN',
+    uid
+  }
+}
+
+export var logout = ()=>{
+  return {
+    type: 'LOGOUT'
   }
 }
