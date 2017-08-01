@@ -109,6 +109,35 @@ describe('Reducers',()=>{
       }
       var res = reducers.authReducer(df({}),df(action));
       expect(res.uid).toEqual(action.uid);
+    });
+
+    it('should clear todos on logout',()=>{
+      var todos = [
+        {
+          id: 1,
+          text: 'bla',
+          completed: false,
+          completedAt: undefined,
+          createdAt: 500
+        },
+        {
+          id: 2,
+          text: 'blabla',
+          completed: false,
+          completedAt: undefined,
+          createdAt: 512
+        }
+      ];
+
+      reducers.todosReducer(df(todos),df({
+        type: 'ADD_TODOS',
+        todos
+      }));
+      var action = {
+        type: 'LOGOUT'
+      }
+      var res = reducers.todosReducer(df({}),df(action));
+      expect(res).toEqual([]);
     })
   });
 

@@ -53,6 +53,8 @@ export var todosReducer = (state=[], action) =>{
       return state.filter((todo)=> todo.id !== action.id);
     case 'REMOVE_COMPLETED':
       return state.filter((todo)=> todo.completed == false);
+    case 'LOGOUT':
+      return [];
     default:
       return state;
   }
@@ -65,7 +67,9 @@ export var authReducer = (state={}, action) => {
       uid: action.uid
     };
    case 'LOGOUT':
-    return {}
+    return {
+      todos: undefined
+    }
    default:
     return state;
  }
